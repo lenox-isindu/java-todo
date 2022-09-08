@@ -2,14 +2,17 @@ package dao;
 
 import models.Task;
 import org.sql2o.*;
-import org.junit.*;
-import static org.junit.Assert.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class Sql2oTaskDaoTest {
     private Sql2oTaskDao taskDao; //ignore me for now. We'll create this soon.
     private Connection conn; //must be sql2o class conn
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
@@ -17,7 +20,7 @@ public class Sql2oTaskDaoTest {
         conn = sql2o.open(); //keep connection open through entire test so it does not get erased
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         conn.close();
     }
@@ -47,7 +50,7 @@ public class Sql2oTaskDaoTest {
 
     @Test
     public void noTasksReturnsEmptyList() throws Exception {
-        assertEquals(0, taskDao.getAll().size());
+        Assertions.assertEquals(0, taskDao.getAll().size());
     }
 
     @Test
@@ -66,7 +69,7 @@ public class Sql2oTaskDaoTest {
         Task task = setupNewTask();
         taskDao.add(task);
         taskDao.deleteById(task.getId());
-        assertEquals(0, taskDao.getAll().size());
+        Assertions.assertEquals(0, taskDao.getAll().size());
     }
 
     @Test

@@ -2,23 +2,22 @@ package dao;
 
 import models.Category;
 import models.Task;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class Sql2oCategoryDaoTest {
     private Sql2oCategoryDao categoryDao;
     private Sql2oTaskDao taskDao;
     private Connection conn;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
@@ -27,7 +26,7 @@ public class Sql2oCategoryDaoTest {
         conn = sql2o.open();
     }
 
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         conn.close();
     }
