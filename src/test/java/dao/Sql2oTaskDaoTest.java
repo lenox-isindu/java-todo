@@ -27,7 +27,7 @@ public class Sql2oTaskDaoTest {
         Task task = setupNewTask();
         int originalTaskId = task.getId();
         taskDao.add(task);
-        assertNotEquals(originalTaskId, task.getId()); //how does this work?
+        Assertions.assertNotEquals(originalTaskId, task.getId()); //how does this work?
     }
 
     @Test
@@ -35,14 +35,14 @@ public class Sql2oTaskDaoTest {
         Task task = setupNewTask();
         taskDao.add(task); //add to dao (takes care of saving)
         Task foundTask = taskDao.findById(task.getId()); //retrieve
-        assertEquals(task, foundTask); //should be the same
+        Assertions.assertEquals(task, foundTask); //should be the same
     }
 
     @Test
     public void addedTasksAreReturnedFromgetAll() throws Exception {
         Task task = setupNewTask();
         taskDao.add(task);
-        assertEquals(1, taskDao.getAll().size());
+        Assertions.assertEquals(1, taskDao.getAll().size());
     }
 
     @Test
@@ -58,7 +58,7 @@ public class Sql2oTaskDaoTest {
 
         taskDao.update(task.getId(),"brush the cat", 1);
         Task updatedTask = taskDao.findById(task.getId()); //why do I need to refind this?
-        assertNotEquals(initialDescription, updatedTask.getDescription());
+        Assertions.assertNotEquals(initialDescription, updatedTask.getDescription());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class Sql2oTaskDaoTest {
         taskDao.add(otherTask);
         int daoSize = taskDao.getAll().size();
         taskDao.clearAllTasks();
-        assertTrue(daoSize > 0 && daoSize > taskDao.getAll().size()); //this is a little overcomplicated, but illustrates well how we might use `assertTrue` in a different way.
+        Assertions.assertTrue(daoSize > 0 && daoSize > taskDao.getAll().size()); //this is a little overcomplicated, but illustrates well how we might use `assertTrue` in a different way.
     }
 
     @Test
@@ -85,7 +85,7 @@ public class Sql2oTaskDaoTest {
         Task task = setupNewTask();
         int originalCatId = task.getCategoryId();
         taskDao.add(task);
-        assertEquals(originalCatId, taskDao.findById(task.getId()).getCategoryId());
+        Assertions.assertEquals(originalCatId, taskDao.findById(task.getId()).getCategoryId());
     }
 
     //define the following once and then call it as above in your tests.

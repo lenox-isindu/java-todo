@@ -37,7 +37,7 @@ public class Sql2oCategoryDaoTest {
         Category category = setupNewCategory();
         int originalCategoryId = category.getId();
         categoryDao.add(category);
-        assertNotEquals(originalCategoryId, category.getId());
+        Assertions.assertNotEquals(originalCategoryId, category.getId());
     }
 
     @Test
@@ -45,19 +45,19 @@ public class Sql2oCategoryDaoTest {
         Category category = setupNewCategory();
         categoryDao.add(category);
         Category foundCategory = categoryDao.findById(category.getId());
-        assertEquals(category, foundCategory);
+        Assertions.assertEquals(category, foundCategory);
     }
 
     @Test
     public void addedCategoriesAreReturnedFromGetAll() throws Exception {
         Category category = setupNewCategory();
         categoryDao.add(category);
-        assertEquals(1, categoryDao.getAll().size());
+        Assertions.assertEquals(1, categoryDao.getAll().size());
     }
 
     @Test
     public void noCategoriesReturnsEmptyList() throws Exception {
-        assertEquals(0, categoryDao.getAll().size());
+        Assertions.assertEquals(0, categoryDao.getAll().size());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class Sql2oCategoryDaoTest {
         categoryDao.add(category);
         categoryDao.update(category.getId(),"Cleaning");
         Category updatedCategory = categoryDao.findById(category.getId());
-        assertNotEquals(initialDescription, updatedCategory.getName());
+        Assertions.assertNotEquals(initialDescription, updatedCategory.getName());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class Sql2oCategoryDaoTest {
         Category category = setupNewCategory();
         categoryDao.add(category);
         categoryDao.deleteById(category.getId());
-        assertEquals(0, categoryDao.getAll().size());
+        Assertions.assertEquals(0, categoryDao.getAll().size());
     }
 
     @Test
@@ -86,7 +86,7 @@ public class Sql2oCategoryDaoTest {
         categoryDao.add(otherCategory);
         int daoSize = categoryDao.getAll().size();
         categoryDao.clearAllCategories();
-        assertTrue(daoSize > 0 && daoSize > categoryDao.getAll().size());
+        Assertions.assertTrue(daoSize > 0 && daoSize > categoryDao.getAll().size());
     }
 
     @Test
@@ -99,10 +99,10 @@ public class Sql2oCategoryDaoTest {
         Task thirdTask = new Task("trim hedge", categoryId);
         taskDao.add(newTask);
         taskDao.add(otherTask); //we are not adding task 3 so we can test things precisely.
-        assertEquals(2, categoryDao.getAllTasksByCategory(categoryId).size());
-        assertTrue(categoryDao.getAllTasksByCategory(categoryId).contains(newTask));
-        assertTrue(categoryDao.getAllTasksByCategory(categoryId).contains(otherTask));
-        assertFalse(categoryDao.getAllTasksByCategory(categoryId).contains(thirdTask)); //things are accurate!
+        Assertions.assertEquals(2, categoryDao.getAllTasksByCategory(categoryId).size());
+        Assertions.assertTrue(categoryDao.getAllTasksByCategory(categoryId).contains(newTask));
+        Assertions.assertTrue(categoryDao.getAllTasksByCategory(categoryId).contains(otherTask));
+        Assertions.assertFalse(categoryDao.getAllTasksByCategory(categoryId).contains(thirdTask)); //things are accurate!
     }
 
     // helper method
